@@ -1,8 +1,10 @@
+.DS_Store
+
 # Node Modules
 node_modules
 
 # Settings VS Code
 *.vscode
 
-# Package Lock
-package-lock.json
+#Gulp
+.publish
