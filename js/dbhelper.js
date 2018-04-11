@@ -8,8 +8,11 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 8000 // Change this to your server port
-    return `http://localhost:${port}/data/restaurants.json`;
+    const github = 'https://jotagep.github.io/mws-restaurant-udacity'
+    const data = '/assets/data/restaurants.json'; 
+    return window.location.hostname.includes('localhost')
+      ? `${window.location.protocol}//${window.location.hostname}:${window.location.port}${data}`
+      : `${github}${data}`;
   }
 
   /**
@@ -150,7 +153,7 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    return (`./assets/img/${restaurant.photograph}`);
   }
 
   /**
