@@ -9,7 +9,7 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     const github = 'https://jotagep.github.io/mws-restaurant-udacity'
-    const data = '/assets/data/restaurants.json'; 
+    const data = '/data/restaurants.json'; 
     return window.location.hostname.includes('localhost')
       ? `${window.location.protocol}//${window.location.hostname}:${window.location.port}${data}`
       : `${github}${data}`;
