@@ -130,6 +130,7 @@ nav h1 a {
 }
 
 /* ====================== Restaurant Listing ====================== */
+
 #restaurants-list {
   background-color: #f3f3f3;
   list-style: outside none none;
@@ -137,7 +138,7 @@ nav h1 a {
   padding: 30px 15px 60px;
   text-align: center;
 }
-#restaurants-list li {
+.card {
   background-color: #fff;
   border: 2px solid #ccc;
   font-family: Arial,sans-serif;
@@ -155,7 +156,7 @@ nav h1 a {
   min-height: 248px;
   min-width: 100%;
 }
-#restaurants-list li h1 {
+.card h1 {
   color: #f18200;
   font-family: Arial,sans-serif;
   font-size: 14pt;
@@ -169,7 +170,7 @@ nav h1 a {
   margin: 0;
   font-size: 11pt;
 }
-#restaurants-list li a {
+.card a {
   background-color: orange;
   border-bottom: 3px solid #eee;
   color: #fff;
