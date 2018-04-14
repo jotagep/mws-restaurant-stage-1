@@ -7,7 +7,7 @@
   <meta name="author" content="Jorge Garcia Palacin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta itemprop="name" content="Udacity Restaurant Reviews Project 1">
-  <meta name="theme-color" content="#252831"/>
+  <meta name="theme-color" content="#252831" />
   <meta charset="utf-8">
 
   <!-- Styles -->
@@ -39,16 +39,18 @@
     <section id="map-container">
       <div id="map"></div>
     </section>
-    <section>
+    <section id="main-restaurant">
       <div class="filter-options">
-        <h2>Filter Results</h2>
-        <div class="filter-fields">
-          <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
-            <option value="all">All Neighborhoods</option>
-          </select>
-          <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
-            <option value="all">All Cuisines</option>
-          </select>
+        <div class="filter__container">
+          <h2>Filter Results</h2>
+          <div class="filter-fields">
+            <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+              <option value="all">All Neighborhoods</option>
+            </select>
+            <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+              <option value="all">All Cuisines</option>
+            </select>
+          </div>
         </div>
       </div>
       <ul id="restaurants-list"></ul>

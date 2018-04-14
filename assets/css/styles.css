@@ -89,6 +89,11 @@ section {
   flex-direction: column;
 }
 
+#main-restaurant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 #footer {
   background-color: #444;
@@ -182,27 +187,32 @@ nav h1 a:focus {
 .filter-options {
   width: 100vw;
   height: auto;
-  padding: 2rem 0;
+  padding: 3rem;
   background-color: #252831;
+  display: flex;
+  justify-content: center;
+}
+
+.filter__container {
+  width: 100%;
+  max-width: 80rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 
-
-.filter-options h2 {
+.filter__container h2 {
   color: white;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: normal;
   line-height: 1;
-  margin: 0 2rem;
+  margin-right: 2rem;
 }
 
 .filter-fields {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin: 1rem;
 }
 
 .filter-fields select {
@@ -211,8 +221,7 @@ nav h1 a:focus {
   font-size: 2rem;
   height: 3.5rem;
   letter-spacing: 0;
-  margin: 1rem;
-  padding: 0 1rem;
+  margin: 1rem 0;
 }
 
 /* ====================== Restaurant Listing ====================== */
@@ -221,12 +230,12 @@ nav h1 a:focus {
   background-color: #f3f3f3;
   list-style: none;
   margin: 0;
-  padding: 3rem 2rem;
+  padding: 3rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
+  max-width: 140rem;
 }
-
 
 .card {
   background-color: #fff;
@@ -237,6 +246,7 @@ nav h1 a:focus {
   padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex: 1 0 100%;
 }
 
@@ -280,11 +290,6 @@ nav h1 a:focus {
 
 /* ====================== Restaurant Details ====================== */
 
-.inside {
-  display: flex;
-  flex-direction: column;
-}
-
 .inside header,
 .inside footer {
   width: 100vw;
@@ -298,9 +303,9 @@ nav h1 a:focus {
 #reviews-container {
   border-bottom: 1px solid #d9d9d9;
   border-top: 2px solid #d9d9d9;
-  padding: 3rem 2rem;
-  width: 100vw;
+  padding: 3rem;
 }
+
 
 /* ==== Restaurant Details - Container ==== */
 
@@ -342,7 +347,7 @@ nav h1 a:focus {
 }
 
 #restaurant-hours {
-  margin: 0 1.5rem;
+  margin: 0 auto;
 }
 
 #restaurant-hours td {
@@ -372,6 +377,9 @@ nav h1 a:focus {
 #reviews-list {
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .review__card {
@@ -435,3 +443,101 @@ nav h1 a:focus {
   color: #666;
 }
 
+/* ====================== Responsive Design: Media Queries ====================== */
+
+@media screen and (min-width: 576px) {
+  nav h1 a {
+    font-size: 2.6rem;
+  }
+
+  .filter-fields {
+    flex-direction: row;
+  }
+
+  .filter-fields select {
+    flex: 1;
+    margin-right: 2rem;
+  }
+
+  .filter-fields select:last-of-type {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 670px) {
+  nav h1 a {
+    font-size: 3rem;
+  }
+
+  .filter__container {
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  .filter__container h2 {
+    font-size: 2rem;
+  }
+
+  .filter-fields {
+    flex: 1;
+  }
+
+  .card,
+  .review__card {
+    flex: 0 1 calc(50% - 1.5rem);
+  }
+
+}
+
+@media screen and (min-width: 930px) {
+  nav h1 a {
+    font-size: 3.2rem;
+  }
+
+  #restaurants-list {
+    padding: 4rem;
+  }
+
+  .card,
+  .review__card {
+    flex: 0 1 calc(33.33% - 2rem);
+  }
+
+  .card .card__title {
+    font-size: 2.5rem;
+  }
+  
+  .inside #map-container {
+    flex: 1 1 40%;
+  }
+  
+  #restaurant-container {
+    flex: 1 1 50%;
+  }
+  #reviews-container {
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 2px solid #d9d9d9;
+    padding: 3rem 2rem;
+    width: 100vw;
+  }
+
+  #footer {
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+
+  #restaurants-list {
+    padding: 4rem;
+    max-width: 200rem;
+  }
+
+  .card {
+    flex: 0 1 calc(25% - 2.25rem);
+  }
+
+  #footer {
+    font-size: 2rem;
+  }
+}
