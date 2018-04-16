@@ -358,7 +358,8 @@ nav h1 a:focus {
 #restaurant-hours .day {
   color: #fff;
   background-color:#666;
-  text-align: right;
+  text-align: left;
+  font-weight: 300;
 }
 
 #restaurant-hours .time {
@@ -441,6 +442,7 @@ nav h1 a:focus {
 .review__comments {
   margin: 0 0 10px;
   color: #666;
+  font-weight: 300;
 }
 
 /* ====================== Responsive Design: Media Queries ====================== */
