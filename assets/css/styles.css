@@ -99,7 +99,7 @@ section {
   background-color: #444;
   color: #aaa;
   width: 100vw;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   letter-spacing: 1px;
   padding: 2.5rem;
   text-align: center;
@@ -142,9 +142,9 @@ nav h1 a:focus {
 /* ====================== Breadcumb bar ====================== */
 
 .breadcrumb-bar {
-  padding: 2rem;
+  padding: 2rem 3rem;
   list-style: none;
-  background-color: #eee;
+  background-color: #e6e6e6;
 }
 
 /* Display list items side by side */
@@ -177,7 +177,7 @@ nav h1 a:focus {
 
 #map {
   height: 40rem;
-  width: 100vw;
+  width: 100%;
   background-color: #ccc;
 }
 
@@ -489,9 +489,48 @@ nav h1 a:focus {
 
 }
 
+@media screen and (min-width: 860px) {
+  .inside #maincontent {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .inside #map-container {
+    flex: 1;
+  }
+
+  .inside #map {
+    height: 100%;
+  }
+
+  #restaurant-container {
+    flex: 0 1 45%;
+    max-width: 86rem;
+    order: -1;
+  }
+
+  #restaurant-img {
+    border-radius: 20px;
+  }
+
+  #restaurant-address {
+    margin: 2.2rem 0;
+    text-align: left;
+  }
+
+  #restaurant-hours {
+    margin: 0;
+  }
+}
+
+
 @media screen and (min-width: 930px) {
   nav h1 a {
     font-size: 3.2rem;
+  }
+
+  .breadcrumb-bar {
+    padding: 2.5rem 4rem;
   }
 
   #restaurants-list {
@@ -501,35 +540,29 @@ nav h1 a:focus {
   .card,
   .review__card {
     flex: 0 1 calc(33.33% - 2rem);
+    max-width: 45rem;
   }
 
   .card .card__title {
     font-size: 2.5rem;
   }
   
-  .inside #map-container {
-    flex: 1 1 40%;
-  }
-  
   #restaurant-container {
-    flex: 1 1 50%;
-  }
-  #reviews-container {
-    border-bottom: 1px solid #d9d9d9;
-    border-top: 2px solid #d9d9d9;
-    padding: 3rem 2rem;
-    width: 100vw;
+    padding: 3rem 4rem;
   }
 
-  #footer {
-    font-size: 1.8rem;
+  #reviews-container {
+    border-top: 2px solid #d9d9d9;
+    width: 100%;
+    max-width: 140rem;
+    padding: 4rem;
+    justify-content: center;
   }
 }
 
 @media screen and (min-width: 1800px) {
 
   #restaurants-list {
-    padding: 4rem;
     max-width: 200rem;
   }
 
@@ -537,7 +570,11 @@ nav h1 a:focus {
     flex: 0 1 calc(25% - 2.25rem);
   }
 
+  #reviews-container {
+    max-width: 200rem;
+  }
+
   #footer {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
