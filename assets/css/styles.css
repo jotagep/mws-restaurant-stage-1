@@ -82,7 +82,7 @@ section {
 
 
 #maincontent {
-  width: 100vw;
+  width: 100%;
   background-color: #f3f3f3;
   min-height: 100%;
   display: flex;
@@ -98,7 +98,7 @@ section {
 #footer {
   background-color: #444;
   color: #aaa;
-  width: 100vw;
+  width: 100%;
   font-size: 1.4rem;
   letter-spacing: 1px;
   padding: 2.5rem;
@@ -110,7 +110,7 @@ section {
 /* ====================== Navigation ====================== */
 
 nav {
-  width: 100vw;
+  width: 100%;
   padding: 2rem 0;
   background-color: #252831;
   text-align: center;
@@ -185,7 +185,7 @@ nav h1 a:focus {
 /* ====================== Restaurant Filtering ====================== */
 
 .filter-options {
-  width: 100vw;
+  width: 100%;
   height: auto;
   padding: 3rem;
   background-color: #252831;
@@ -234,6 +234,8 @@ nav h1 a:focus {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  width: 100%;
+  min-height: 30rem;
   max-width: 140rem;
 }
 
@@ -292,7 +294,7 @@ nav h1 a:focus {
 
 .inside header,
 .inside footer {
-  width: 100vw;
+  width: 100%;
 }
 
 .inside #map-container {

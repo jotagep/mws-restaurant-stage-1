@@ -15,5 +15,92 @@ gulp.task('serve', function () {
     gulp.watch(['./*.html', './assets/css/*.css', './js/*.js']).on('change', reload);
 });
 
-
-
+gulp.task('resp-img', function () {
+    return gulp.src('./assets/img/*.{png,jpg}')
+      .pipe(responsive({
+        '*.jpg': [{
+            // image-small.jpg is 300 pixels wide
+            width: 300,
+            rename: {
+              suffix: '-small',
+              extname: '.jpg',
+            },
+          }, {
+            // image-small@2x.jpg is 600 pixels wide
+            width: 300 * 2,
+            rename: {
+              suffix: '-small@2x',
+              extname: '.jpg',
+            },
+          }, {
+            // image-medium.jpg is 400 pixels wide
+            width: 400,
+            rename: {
+              suffix: '-medium',
+              extname: '.jpg',
+            },
+          }, {
+            // image-medium@2x.jpg is 800 pixels wide
+            width: 400 * 2,
+            rename: {
+              suffix: '-medium@2x',
+              extname: '.jpg',
+            },
+          }, {
+            // image-large.jpg is 600 pixels wide
+            width: 600,
+            rename: {
+              suffix: '-large',
+              extname: '.jpg',
+            },
+          }, {
+            // image-original.jpg is 800 pixels wide
+            rename: {
+              suffix: '-original',
+              extname: '.jpg',
+            },
+          }, {
+            // image-small.webp is 300 pixels wide
+            width: 300,
+            rename: {
+              suffix: '-small',
+              extname: '.webp',
+            },
+          }, {
+            // image-small@2x.webp is 600 pixels wide
+            width: 300 * 2,
+            rename: {
+              suffix: '-small@2x',
+              extname: '.webp',
+            },
+          }, {
+            // image-medium.webp is 400 pixels wide
+            width: 400,
+            rename: {
+              suffix: '-medium',
+              extname: '.webp',
+            },
+          }, {
+            // image-medium@2x.webp is 800 pixels wide
+            width: 400 * 2,
+            rename: {
+              suffix: '-medium@2x',
+              extname: '.webp',
+            },
+          }, {
+            // image-large.webp is 600 pixels wide
+            width: 600,
+            rename: {
+              suffix: '-large',
+              extname: '.webp',
+            },
+          }, {
+            // image-original.webp is 800 pixels wide
+            rename: {
+              suffix: '-original',
+              extname: '.webp',
+            },
+          }],
+        }))
+        .pipe(gulp.dest('./assets/img/'));
+  });
