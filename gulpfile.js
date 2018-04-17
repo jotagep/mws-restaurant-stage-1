@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
+const responsive = require('gulp-responsive');
 
 // Reference to reload method
 const reload = browserSync.reload;
