@@ -24,7 +24,6 @@ p {
 }
 
 body {
-  background-color: #fdfdfd;
   box-sizing: border-box;
   position: relative;
 }
@@ -83,7 +82,7 @@ section {
 
 #maincontent {
   width: 100%;
-  background-color: #f3f3f3;
+  background-color: #e4e4e4;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -96,7 +95,7 @@ section {
 }
 
 #footer {
-  background-color: #444;
+  background-color: #252831;
   color: #aaa;
   width: 100%;
   font-size: 1.4rem;
@@ -227,7 +226,6 @@ nav h1 a:focus {
 /* ====================== Restaurant Listing ====================== */
 
 #restaurants-list {
-  background-color: #f3f3f3;
   list-style: none;
   margin: 0;
   padding: 3rem;
@@ -322,7 +320,7 @@ nav h1 a:focus {
 }
 
 
-#restaurant-img {
+#restaurant-photo > img {
   width: 100%;
   border-radius: 5px;
 }

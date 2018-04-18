@@ -157,6 +157,18 @@ class DBHelper {
   }
 
   /**
+   * Restaurant responsive image URL.
+   */
+  static imageRespForRestaurant(restaurant, size = 'original', ext = 'jpg') {
+    if (size == 'small' || size == 'medium') {
+      return (`./assets/img/${restaurant.id}-${size}.${ext} 1x,
+      ./assets/img/${restaurant.id}-${size}@2x.${ext} 2x`);
+    } else {
+      return (`./assets/img/${restaurant.id}-${size}.${ext} 1x`);
+    }
+  }
+
+  /**
    * Map marker for a restaurant.
    */
   static mapMarkerForRestaurant(restaurant, map) {

@@ -55,9 +55,64 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
-  const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  const picture = document.getElementById('restaurant-photo');
+
+  /* Sources WebP Images */
+  const Webp_original = document.createElement("source");
+  Webp_original.type = "image/webp";
+  Webp_original.srcset = DBHelper.imageRespForRestaurant(restaurant, 'original', 'webp');
+  Webp_original.media = `(min-width: 661px) and (max-width: 860px),
+                          (min-width: 1501)`;
+  picture.append(Webp_original);
+
+  const Webp_large = document.createElement("source");
+  Webp_large.type = "image/webp";
+  Webp_large.srcset = DBHelper.imageRespForRestaurant(restaurant, 'large', 'webp');
+  Webp_large.media = `(min-width: 461px) and (max-width: 660px), 
+                      (min-width: 1061px) and (max-width: 1500px)`;
+  picture.append(Webp_large);
+
+  const WebP_medium = document.createElement("source");
+  WebP_medium.type = "image/webp";
+  WebP_medium.srcset = DBHelper.imageRespForRestaurant(restaurant, 'medium', 'webp');
+  WebP_medium.media = `(min-width: 361px) and (max-width: 460px),
+                        (min-width: 861px) and (max-width: 1060px)`;
+  picture.append(WebP_medium);
+
+  const WebP_small = document.createElement("source");
+  WebP_small.type = "image/webp";
+  WebP_small.srcset = DBHelper.imageRespForRestaurant(restaurant, 'small', 'webp');
+  WebP_small.media = `(max-width: 360px)`;
+  picture.append(WebP_small);
+
+  /* Sources JPEG Images */
+  const Jpg_original = document.createElement("source");
+  Jpg_original.type = "image/jpeg";
+  Jpg_original.srcset = DBHelper.imageRespForRestaurant(restaurant, 'original');
+  Jpg_original.media = `(min-width: 661px) and (max-width: 860px),
+                        (min-width: 1501)`;
+  picture.append(Jpg_original);
+
+  const Jpg_large = document.createElement("source");
+  Jpg_large.type = "image/jpeg";
+  Jpg_large.srcset = DBHelper.imageRespForRestaurant(restaurant, 'large');
+  Jpg_large.media = `(min-width: 461px) and (max-width: 660px), 
+                      (min-width: 1061px) and (max-width: 1500px)`;
+  picture.append(Jpg_large);
+
+  const Jpg_medium = document.createElement("source");
+  Jpg_medium.type = "image/jpeg";
+  Jpg_medium.srcset =  DBHelper.imageRespForRestaurant(restaurant, 'medium');
+  Jpg_medium.media = `(min-width: 361px) and (max-width: 460px),
+                      (min-width: 861px) and (max-width: 1060px)`;
+  picture.append(Jpg_medium);
+
+  const image_small = document.createElement("img");
+  image_small.type = "image/jpeg";
+  image_small.srcset = DBHelper.imageRespForRestaurant(restaurant, 'small');
+  image_small.media = `(max-width: 360px)`;
+  image_small.alt = `${restaurant.name} - ${restaurant.photo_description}`;
+  picture.append(image_small);
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;

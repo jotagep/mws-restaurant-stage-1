@@ -150,14 +150,13 @@ createRestaurantHTML = restaurant => {
   /* Sources WebP Images */
   const Webp_large = document.createElement("source");
   Webp_large.type = "image/webp";
-  Webp_large.srcset = `./assets/img/${restaurant.id}-large.webp 1x`;
+  Webp_large.srcset = DBHelper.imageRespForRestaurant(restaurant, 'large', 'webp');;
   Webp_large.media = `(min-width: 511px) and (max-width: 640px)`;
   picture.append(Webp_large);
 
   const WebP_medium = document.createElement("source");
   WebP_medium.type = "image/webp";
-  WebP_medium.srcset = `./assets/img/${restaurant.id}-medium.webp 1x,
-                        ./assets/img/${restaurant.id}-medium@2x.webp 2x`;
+  WebP_medium.srcset = DBHelper.imageRespForRestaurant(restaurant, 'medium', 'webp');;
   WebP_medium.media = `(min-width: 411px) and (max-width: 510px),
                        (min-width: 791px) and (max-width: 930px),
                        (min-width: 1191px)`;
@@ -165,9 +164,8 @@ createRestaurantHTML = restaurant => {
 
   const WebP_small = document.createElement("source");
   WebP_small.type = "image/webp";
-  WebP_small.srcset = `./assets/img/${restaurant.id}-small.webp 1x,
-                        ./assets/img/${restaurant.id}-small@2x.webp 2x`;
-  WebP_small.media = ` (max-width: 410px),
+  WebP_small.srcset = DBHelper.imageRespForRestaurant(restaurant, 'small', 'webp');;
+  WebP_small.media = `(max-width: 410px),
                        (min-width: 650px) and (max-width: 800px),
                        (min-width: 950px) and (max-width: 1200px)`;
   picture.append(WebP_small);
@@ -175,24 +173,22 @@ createRestaurantHTML = restaurant => {
   /* Sources JPEG Images */
   const Jpg_large = document.createElement("source");
   Jpg_large.type = "image/jpeg";
-  Jpg_large.srcset = `./assets/img/${restaurant.id}-large.jpg 1x`;
+  Jpg_large.srcset = DBHelper.imageRespForRestaurant(restaurant, 'large');
   Jpg_large.media = `(min-width: 511px) and (max-width: 640px)`;
   picture.append(Jpg_large);
 
   const Jpg_medium = document.createElement("source");
   Jpg_medium.type = "image/jpeg";
-  Jpg_medium.srcset = `./assets/img/${restaurant.id}-medium.jpg 1x,
-                          ./assets/img/${restaurant.id}-medium@2x.jpg 2x`;
+  Jpg_medium.srcset = DBHelper.imageRespForRestaurant(restaurant, 'medium');
   Jpg_medium.media = `(min-width: 411px) and (max-width: 510px),
                          (min-width: 791px) and (max-width: 930px),
                          (min-width: 1191px)`;
   picture.append(Jpg_medium);
 
   const image_small = document.createElement("img");
-  image_small.type = "image/webp";
+  image_small.type = "image/jpeg";
   image_small.className = "card__img";
-  image_small.srcset = `./assets/img/${restaurant.id}-small.jpg 1x,
-                          ./assets/img/${restaurant.id}-small@2x.jpg 2x`;
+  image_small.srcset = DBHelper.imageRespForRestaurant(restaurant, 'small');
   image_small.media = `(max-width: 410px),
                          (min-width: 650px) and (max-width: 800px),
                          (min-width: 950px) and (max-width: 1200px)`;
@@ -216,6 +212,8 @@ createRestaurantHTML = restaurant => {
 
   const more = document.createElement("a");
   more.className = "card__button";
+  more.setAttribute('role', 'button');
+  more.setAttribute('aria-label', 'Go to restaurant details');
   more.innerHTML = "View Details";
   more.href = DBHelper.urlForRestaurant(restaurant);
   li.append(more);
