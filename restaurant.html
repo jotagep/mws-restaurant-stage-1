@@ -26,6 +26,7 @@
 <body class="inside">
   <!-- Beginning header -->
   <header>
+    <a href="#maincontent" class="skip__content">Skip to restaurant details</a>
     <!-- Beginning nav -->
     <nav>
       <h1>
@@ -33,7 +34,7 @@
       </h1>
     </nav>
     <!-- Beginning breadcrumb -->
-    <nav class="breadcrumb-bar">
+    <nav class="breadcrumb-bar" aria-label="breadcumb">
       <ul id="breadcrumb">
         <li>
           <a href="/">Home</a>
@@ -46,14 +47,14 @@
   <!-- End header -->
 
   <!-- Beginning main -->
-  <main id="maincontent">
+  <main id="maincontent" aria-label="main content">
     <!-- Beginning map -->
     <section id="map-container">
-      <div id="map"></div>
+      <div id="map" tabindex="-1" role="application" aria-hidden="true"></div>
     </section>
     <!-- End map -->
     <!-- Beginning restaurant -->
-    <section id="restaurant-container">
+    <section id="restaurant-container" role="contentinfo">
       <h1 id="restaurant-name"></h1>
       <picture id="restaurant-photo"></picture>
       <p id="restaurant-cuisine"></p>

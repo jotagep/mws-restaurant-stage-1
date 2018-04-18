@@ -28,25 +28,28 @@
 
 <body>
   <header>
+    <a href="#main-restaurant" class="skip__content">Skip to filter section</a>
     <nav>
       <h1>
-        <a href="/">Restaurant Reviews</a>
+        <a href="/" title="View Home page">Restaurant Reviews</a>
       </h1>
     </nav>
   </header>
 
-  <main id="maincontent">
+  <main id="maincontent" aria-label="main content">
     <section id="map-container">
-      <div id="map"></div>
+      <div id="map" tabindex="-1" role="application" aria-hidden="true"></div>
     </section>
     <section id="main-restaurant">
       <div class="filter-options">
         <div class="filter__container">
           <h2>Filter Results</h2>
           <div class="filter-fields">
+            <label for="neighborhoods-select">Select neighborhood:</label>
             <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
               <option value="all">All Neighborhoods</option>
             </select>
+            <label for="cuisines-select">Select cuisine:</label>
             <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
               <option value="all">All Cuisines</option>
             </select>
@@ -58,8 +61,8 @@
   </main>
 
   <footer id="footer">
-    Copyright (c) 2017
-    <a href="/">
+    Copyright (c) 2018
+    <a href="/" title="View home page"> 
       <strong>Restaurant Reviews</strong>
     </a> All Rights Reserved.
   </footer>
