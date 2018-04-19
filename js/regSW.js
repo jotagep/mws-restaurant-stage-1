@@ -1,13 +1,13 @@
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("./sw.js", { scope: "./" })
+      .register("./sw.js")
       .then(reg => {
-        console.log("SW install");
+        console.log('ServiceWorker registration successful with scope: ', reg.scope);
       })
       .catch(err => {
         // reg failed :(
-        console.log("SW failed: ", err);
+        console.log("Service Worker failed: ", err);
       });
   });
 }
