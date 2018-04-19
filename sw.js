@@ -1,4 +1,4 @@
-const CACHE_NAME = "rest-reviews-1.0.0";
+const CACHE_NAME = "rest-reviews-1.0.1";
 const urlsToCache = [
   "/",
   "/index.html",
@@ -9,6 +9,7 @@ const urlsToCache = [
   "/js/regSW.js",
   "/js/main.js",
   "/js/restaurant_info.js",
+  "/manifest.json",
   "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css",
   "https://use.fontawesome.com/releases/v5.0.10/css/all.css",
   "https://fonts.googleapis.com/css?family=Open+Sans:300,400|Raleway:300,400",
