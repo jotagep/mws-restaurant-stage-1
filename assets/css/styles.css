@@ -177,7 +177,7 @@ nav h1 a:focus {
 
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-  color: #f18200;
+  color: #AA5D00;
   text-decoration: none;
 }
 
@@ -216,7 +216,7 @@ nav h1 a:focus {
   flex-direction: column;
 }
 
-.filter__container h2 {
+.filter__container h4{
   color: white;
   font-size: 1.8rem;
   font-weight: normal;
@@ -298,9 +298,9 @@ nav h1 a:focus {
 
 
 .card .card__button {
-  background-color:#f18200;
+  background-color:#AA5D00;
   border-bottom: 3px solid #eee;
-  color: #22313F;
+  color: #fff;
   display: inline-block;
   font-size: 1.6rem;
   font-weight: 400;
@@ -313,7 +313,7 @@ nav h1 a:focus {
 }
 
 .card .card__button:hover {
-  background-color: #ffa033;
+  background-color: #e47a00;
 }
 
 /* ====================== Restaurant Details ====================== */
@@ -338,7 +338,7 @@ nav h1 a:focus {
 /* ==== Restaurant Details - Container ==== */
 
 #restaurant-name {
-  color: #f18200;
+  color: #AA5D00;
   font-size: 3rem;
   font-weight: 300;
   letter-spacing: 1px;
@@ -396,11 +396,12 @@ nav h1 a:focus {
 
 /* ==== Restaurant Details - Reviews ==== */
 
-#reviews-container h2 {
-  color: #f58500;
+#reviews-container h3 {
+  color: #AA5D00;
   font-size: 2.5rem;
   font-weight: 300;
   letter-spacing: 0;
+  text-transform: uppercase;
 }
 
 #reviews-list {
@@ -454,7 +455,7 @@ nav h1 a:focus {
 
 .review__rating {
   padding: .7rem 1rem;
-  background-color: #f58500;
+  background-color: #AA5D00;
   color: #fff;
   margin-bottom: 2rem;
   border-radius: 5px;
