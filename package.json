@@ -9,12 +9,19 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp serve",
     "resp-img": "gulp resp-img",
-    "serve": "gulp serve"
+    "build": "gulp build",
+    "serve": "gulp serve",
+    "serve:dist": "gulp serve:dist"
   },
   "devDependencies": {
     "browser-sync": "^2.23.6",
     "gulp": "^3.9.1",
-    "gulp-responsive": "^2.10.0"
+    "gulp-responsive": "^2.10.0",
+    "gulp-clean-css": "^3.9.4",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-uglify-es": "^1.0.4",
+    "gulp-sourcemaps": "^2.6.4"
   }
 }

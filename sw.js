@@ -4,7 +4,7 @@ const urlsToCache = [
   "/index.html",
   "/restaurant.html",
   "/data/restaurants.json",
-  "/assets/css/styles.css",
+  "/css/styles.css",
   "/js/dbhelper.js",
   "/js/regSW.js",
   "/js/main.js",
@@ -142,7 +142,6 @@ self.addEventListener("install", function(event) {
     caches
       .open(CACHE_NAME)
       .then(function(cache) {
-        console.log("Opened cache");
         return cache.addAll(urlsToCache);
       })
       .catch(function(error) {

@@ -24,14 +24,35 @@ $ npm install
 
 ## Usage
 
+####DEV VERSION
+
 To run a **local server** in your machine, you can run:
 
 `$ gulp serve` or `$ npm run serve`
 
 You can see your site live at port __8000__: [http://localhost:8000/](http://localhost:8000/)
 
+
+####PRODUCTION VERSION
+
+To run a **local server** in your machine production version, you can run:
+
+`$ gulp serve:dist` or `$ npm run serve:dist`
+
+You can see your site live at port __8000__: [http://localhost:8000/](http://localhost:8000/)
+
 ---
 
-#### Thanks all! And enjoy this repo! 👍
+#### OTHER COMMANDS
+
+Run a script to create a responsive images from img_original folder:
+
+`$ gulp resp-img` or `$ npm run resp-img`
+
+If you want to build a production version on dist folder:
+
+`$ gulp build` or `$ npm run build`
+
+#### Thanks all! Fork and enjoy this repo! 👍
 
 
