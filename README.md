@@ -24,7 +24,7 @@ $ npm install
 
 ## Usage
 
-####DEV VERSION
+#### DEV VERSION
 
 To run a **local server** in your machine, you can run:
 
@@ -33,7 +33,7 @@ To run a **local server** in your machine, you can run:
 You can see your site live at port __8000__: [http://localhost:8000/](http://localhost:8000/)
 
 
-####PRODUCTION VERSION
+#### PRODUCTION VERSION
 
 To run a **local server** in your machine production version, you can run:
 
