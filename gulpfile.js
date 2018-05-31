@@ -16,6 +16,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify-es').default;
 const cleanCSS = require('gulp-clean-css');
 const htmlmin = require('gulp-htmlmin');
+const webp = require('gulp-webp');
 
 
 // Reference to reload method
@@ -112,53 +113,6 @@ gulp.task("resp-img", function() {
                 suffix: "-original",
                 extname: ".jpg"
               }
-            },
-            {
-              // image-small.webp is 300 pixels wide
-              width: 300,
-              rename: {
-                suffix: "-small",
-                extname: ".webp"
-              }
-            },
-            {
-              // image-small@2x.webp is 600 pixels wide
-              width: 300 * 2,
-              rename: {
-                suffix: "-small@2x",
-                extname: ".webp"
-              }
-            },
-            {
-              // image-medium.webp is 400 pixels wide
-              width: 400,
-              rename: {
-                suffix: "-medium",
-                extname: ".webp"
-              }
-            },
-            {
-              // image-medium@2x.webp is 800 pixels wide
-              width: 400 * 2,
-              rename: {
-                suffix: "-medium@2x",
-                extname: ".webp"
-              }
-            },
-            {
-              // image-large.webp is 600 pixels wide
-              width: 600,
-              rename: {
-                suffix: "-large",
-                extname: ".webp"
-              }
-            },
-            {
-              // image-original.webp is 800 pixels wide
-              rename: {
-                suffix: "-original",
-                extname: ".webp"
-              }
             }
           ],
 
@@ -182,8 +136,15 @@ gulp.task("resp-img", function() {
     .pipe(gulp.dest("./dist/assets/img/"));
 });
 
+gulp.task('webp', ['resp-img'], function() {
+  return gulp.src('./assets/img/*.jpg')
+    .pipe(webp())
+    .pipe(gulp.dest("./assets/img/"))
+    .pipe(gulp.dest("./dist/assets/img/"));
+});
+
 // Build for production
-gulp.task('build', ['resp-img','minify'], function() {
+gulp.task('build', ['webp','minify'], function() {
   // copy manifest, data and icons
   gulp.src(['./assets/icon/*.png']).pipe(gulp.dest('./dist/assets/icon/'));
   gulp.src(['./data/**/*']).pipe(gulp.dest('./dist/data/'));
