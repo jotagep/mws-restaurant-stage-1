@@ -11,7 +11,7 @@
   <meta charset="utf-8">
 
   <!-- Styles -->
-  <link rel="icon" href="./assets/img/favicon.png">
+  <link rel="icon" href="./assets/icon/favicon.png">
   <!-- Normalize.css for better cross-browser consistency -->
   <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
   <!-- FontAwesome Icons -->
@@ -35,12 +35,15 @@
       <h1>
         <a href="./index.html" title="View Home page">Restaurant Reviews</a>
       </h1>
+      <div class="show-map">
+        <button onclick="toggleMap()" id="btn-map">Show Map</button>
+      </div>
     </nav>
   </header>
 
   <main id="maincontent" aria-label="main content">
     <section id="map-container">
-      <div id="map" tabindex="-1" role="application" aria-hidden="true"></div>
+      <div id="map" tabindex="-1" role="application" aria-hidden="true" style="display: none"></div>
     </section>
     <section id="main-restaurant">
       <div class="filter-options">
@@ -69,11 +72,16 @@
     </a> All Rights Reserved.
   </footer>
 
-  <!-- Register Service Worker -->
-  <script charset="utf-8" src="./js/regSW.js"></script>
-  <script src="js/dbhelper.js"></script>
-  <script src="js/main.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvEFK1EMeKuwvshOn8NAS214I2WzrEPgc&libraries=places&callback=initMap"></script>
+  <!-- Scripts -->
+  <!-- Lazy Load images -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/8.7.1/lazyload.min.js"></script>
+
+  <script src="./js/vendor/idb.js"></script>
+  <script src="./js/dbhelper.js"></script>
+  <script src="./js/main.js"></script>
+
+  <!-- Google Maps -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvEFK1EMeKuwvshOn8NAS214I2WzrEPgc&libraries=places"></script>
 
 </body>
 

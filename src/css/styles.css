@@ -130,6 +130,7 @@ nav {
   background-color: #252831;
   text-align: center;
   display: flex;
+  flex-direction: column;
 }
 
 
@@ -196,6 +197,28 @@ nav h1 a:focus {
   background-color: #ccc;
 }
 
+.show-map {
+  margin-top: 3rem;
+}
+
+#btn-map {
+  padding: 2rem 4rem;
+  border: 1px solid #eee;
+  background: none;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  color: #eee;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .2s ease;
+  outline: none;
+}
+
+#btn-map:hover {
+  background: #eee;
+  color: #252831;
+  transform: translateY(-5px);
+}
 
 /* ====================== Restaurant Filtering ====================== */
 
