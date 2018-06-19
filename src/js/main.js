@@ -253,11 +253,13 @@ toggleMap = () => {
   if (map.style.display === 'none') {
     showMap = true;
     btnMap.innerText = 'Hide Map';
+    more.setAttribute('aria-label', 'Hide Map');
     map.style.display = 'block';
     window.initMap();
   } else {
     showMap = false;
     btnMap.innerText = 'Show Map';
+    more.setAttribute('aria-label', 'Show Map');
     map.style.display = 'none';
   }
 }
