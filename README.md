@@ -1,41 +1,16 @@
 # Mobile Web Specialist Certification Course
----
-#### _Three Stage Course Material Project - Restaurant Reviews_
-
-## Project Overview: Stage 1
-
-For the **Restaurant Reviews** projects, you will incrementally convert a static webpage to a mobile-ready web application. In **Stage One**, you will take a static design that lacks accessibility and convert the design to be responsive on different sized displays and accessible for screen reader use. You will also add a service worker to begin the process of creating a seamless offline experience for your users.
-
-### Specification
-
-You have been provided the code for a restaurant reviews website. The code has a lot of issues. It’s barely usable on a desktop browser, much less a mobile device. It also doesn’t include any standard accessibility features, and it doesn’t work offline at all. Your job is to update the code to resolve these issues while still maintaining the included functionality. 
-
----
-
 ## Installation
 
-Clone my repo in your computer and install **node modules** and dependencies
+-  Clone server repo: [Server Stage 2](https://github.com/udacity/mws-restaurant-stage-2) and follow them to start the server.
+
+- Clone my repo in your computer and install **node modules** and dependencies
 
 ```
 $ git git@github.com:jotagep/mws-restaurant-udacity.git
 $ cd mws-restaurant-udacity
 $ npm install
 ```
-
-## Usage
-
-#### DEV VERSION
-
-To run a **local server** in your machine, you can run:
-
-`$ gulp serve` or `$ npm run serve`
-
-You can see your site live at port __8000__: [http://localhost:8000/](http://localhost:8000/)
-
-
-#### PRODUCTION VERSION
-
-To run a **local server** in your machine production version, you can run:
+- Run a build version(optimized), with this command:
 
 `$ gulp serve:dist` or `$ npm run serve:dist`
 
@@ -43,15 +18,35 @@ You can see your site live at port __8000__: [http://localhost:8000/](http://loc
 
 ---
 
-#### OTHER COMMANDS
+#### _Three Stage Course Material Project - Restaurant Reviews_
 
-Run a script to create a responsive images from img_original folder:
+## Stage 1 -- (DONE)
 
-`$ gulp resp-img` or `$ npm run resp-img`
+## Stage 2 -- (DONE)
 
-If you want to build a production version on dist folder:
+### Requirements
 
-`$ gulp build` or `$ npm run build`
+**Use server data instead of local memory** In the first version of the application, all of the data for the restaurants was stored in the local application. You will need to change this behavior so that you are pulling all of your data from the server instead, and using the response data to generate the restaurant information on the main page and the detail page.
+
+**Use IndexedDB to cache JSON responses** In order to maintain offline use with the development server you will need to update the service worker to store the JSON received by your requests using the IndexedDB API. As with **Stage One**, any page that has been visited by the user should be available offline, with data pulled from the shell database.
+
+**Meet the minimum performance requirements** Once you have your app working with the server and working in offline mode, you’ll need to measure your site performance using Lighthouse.
+
+Lighthouse measures performance in four areas, but your review will focus on three:
+
+- **Progressive Web App** score should be at **90** or better.
+- **Performance** score should be at **70** or better.
+- **Accessibility** score should be at **90** or better.
+
+You can audit your site's performance with Lighthouse by using the Audit tab of Chrome Dev Tools.
+
+### My results
+
+Provided by Lighthouse
+
+![alt text](http://i63.tinypic.com/dxb7sy.png "Test results stage 2")
+
+---
 
 #### Thanks all! Fork and enjoy this repo! 👍
 
