@@ -1,6 +1,8 @@
 /**
  * Common database helper functions.
  */
+var dbPromise;
+
 class DBHelper {
 
     /**
@@ -16,10 +18,33 @@ class DBHelper {
         fetch(DBHelper.DATABASE_URL)
             .then(response => {
                 response.json()
-                    .then(resp => callback(null, resp))
+                    .then(resp => {
+                        dbPromise.then((db) => {
+                            if (!db) return;
+
+                            const tx = db.transaction('restaurants', 'readwrite');
+                            const store = tx.objectStore('restaurants');
+
+                            resp.forEach(restaurant => {
+                                store.put(restaurant);
+                            });
+                            console.log('Added to IDB');
+                        })
+                        return callback(null, resp)
+                    })
                     .catch(e => callback(e, null))
             })
             .catch(error => {
+                dbPromise.then(db => {
+                    if (!db) return;
+                    const store = db.transaction('restaurants')
+                        .objectStore('restaurants');
+
+                    store.getAll().then(function (restaurants) {
+                        console.log('** From IDB **');
+                        return callback(null, restaurants);
+                    });
+                });
                 console.error(error);
             });
     }
@@ -34,6 +59,16 @@ class DBHelper {
                     .catch(e => callback('Restaurant does not exist', null));
             })
             .catch(error => {
+                dbPromise.then(db => {
+                    if (!db) return;
+                    const store = db.transaction('restaurants')
+                        .objectStore('restaurants');
+
+                    store.get(parseInt(id)).then(function (restaurant) {
+                        console.log('** From IDB - ID **');
+                        return callback(null, restaurant);
+                    });
+                });                
                 console.error(error);
             })
 
@@ -166,6 +201,18 @@ class DBHelper {
             animation: google.maps.Animation.DROP
         });
         return marker;
+    }
+
+    static openDB() {
+        if (!navigator.serviceWorker) {
+            return;
+        }
+        console.log(' == IDB Created ==');
+        dbPromise = idb.open('mws', 1, function (upgradeDB) {
+            const store = upgradeDB.createObjectStore('restaurants', {
+                keyPath: 'id'
+            });
+        });
     }
 
 }

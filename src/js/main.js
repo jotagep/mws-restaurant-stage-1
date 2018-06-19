@@ -9,9 +9,10 @@ const myLazyLoad = new LazyLoad();
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener("DOMContentLoaded", event => {
-  registerServiceWorker();
   fetchNeighborhoods();
   fetchCuisines();
+  DBHelper.openDB();
+  registerServiceWorker();
   updateRestaurants();
 });
 
@@ -253,13 +254,13 @@ toggleMap = () => {
   if (map.style.display === 'none') {
     showMap = true;
     btnMap.innerText = 'Hide Map';
-    more.setAttribute('aria-label', 'Hide Map');
+    btnMap.setAttribute('aria-label', 'Hide Map');
     map.style.display = 'block';
     window.initMap();
   } else {
     showMap = false;
     btnMap.innerText = 'Show Map';
-    more.setAttribute('aria-label', 'Show Map');
+    btnMap.setAttribute('aria-label', 'Show Map');
     map.style.display = 'none';
   }
 }

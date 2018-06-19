@@ -14,7 +14,7 @@ const urlsToCache = [
   "/js/dbhelper.js",
   "/js/vendor/idb.js",
   "/manifest.json",
-  "/assets/icon/favicon.png"
+  "/assets/icon/favicon.png",
 ];
 
 self.addEventListener('install', function (event) {
