@@ -44,8 +44,11 @@ self.addEventListener('fetch', (event) => {
       event.respondWith(serveImg(event.request));
       return;
     }
+
+
   }
-  event.respondWith(caches.match(event.request)
+  event.respondWith(
+    caches.match(event.request)
     .then((response) => response || fetch(event.request))
     .catch(error => console.log('Match error, ', error))
   );
@@ -65,14 +68,13 @@ function serveImg(request) {
       return fetch(request).then(function (networkResponse) {
         if (networkResponse.status == 200) {
           cache.put(storageUrl, networkResponse.clone());
-        }  
+        }
         console.log(`${storageUrl} 🌎`);
         return networkResponse;
       });
     });
   });
 }
-
 
 // Check newest cache and delete old version
 self.addEventListener("activate", function (event) {
