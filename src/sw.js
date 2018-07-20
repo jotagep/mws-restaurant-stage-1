@@ -1,4 +1,4 @@
-const staticCache = "rest-reviews-1.1.0";
+const staticCache = "rest-reviews-1.1.3";
 const ImagesCache = "mws-images";
 const allCaches = [
   staticCache,
@@ -15,6 +15,9 @@ const urlsToCache = [
   "/js/vendor/idb.js",
   "/manifest.json",
   "/assets/icon/favicon.png",
+  "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css",
+  "https://use.fontawesome.com/releases/v5.0.10/css/all.css",
+  "https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/8.7.1/lazyload.min.js"
 ];
 
 self.addEventListener('install', function (event) {
@@ -38,14 +41,19 @@ self.addEventListener('install', function (event) {
 self.addEventListener('fetch', (event) => {
 
   const requestURL = new URL(event.request.url);
-
+  
   if (requestURL.origin === location.origin) {
     if (requestURL.pathname.startsWith('/assets/img')) {
       event.respondWith(serveImg(event.request));
       return;
     }
-
-
+    if (requestURL.pathname === '/restaurant.html' ) {
+      event.respondWith(
+        caches.match('/restaurant.html')
+        .then((response) => response || fetch(event.request))
+        .catch(error => console.log('Match error, ', error))
+      );
+    }
   }
   event.respondWith(
     caches.match(event.request)

@@ -14,6 +14,11 @@ class DBHelper {
         return `http://localhost:${port}/restaurants`;
     }
 
+    static get DATABASE_REVIEWS() {
+        const port = '1337';
+        return `http://localhost:${port}/reviews`;
+    }
+
     static fetchRestaurants(callback) {
         fetch(DBHelper.DATABASE_URL)
             .then(response => {
@@ -68,7 +73,7 @@ class DBHelper {
                         console.log('** From IDB - ID **');
                         return callback(null, restaurant);
                     });
-                });                
+                });
                 console.error(error);
             })
 
@@ -109,7 +114,7 @@ class DBHelper {
     /**
      * Fetch restaurants by a cuisine and a neighborhood with proper error handling.
      */
-    static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
+    static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, favorite, callback) {
         // Fetch all restaurants
         DBHelper.fetchRestaurants((error, restaurants) => {
             if (error) {
@@ -121,6 +126,9 @@ class DBHelper {
                 }
                 if (neighborhood != 'all') { // filter by neighborhood
                     results = results.filter(r => r.neighborhood == neighborhood);
+                }
+                if (favorite) {
+                    results = results.filter(r => r.is_favorite === 'true');
                 }
                 callback(null, results);
             }
@@ -163,6 +171,16 @@ class DBHelper {
         });
     }
 
+
+    /**
+     * Fetch reviews for a restaurant.
+     */
+
+    static fetchReviewsById (id) {
+        return fetch(`${this.DATABASE_REVIEWS}/?restaurant_id=${id}`)
+            .then(res => res.json());
+    }
+    
     /**
      * Restaurant page URL.
      */
@@ -175,6 +193,17 @@ class DBHelper {
      */
     static imageUrlForRestaurant(restaurant) {
         return (`./assets/img/${restaurant.photograph}`);
+    }
+
+    /**
+     * Restaurant Favorite Handler.
+     */
+    static favoriteHandler(restaurant) {
+        const toggleFavorite = restaurant.is_favorite === "true" ? false : true;
+        return fetch(`${DBHelper.DATABASE_URL}/${restaurant.id}/?is_favorite=${toggleFavorite}`, {
+                method: 'PUT'
+            })
+            .then(res => res.json());
     }
 
     /**

@@ -1,5 +1,6 @@
 let restaurants, neighborhoods, cuisines;
 let showMap = false;
+let showFavorite = false;
 var map;
 var markers = [];
 
@@ -74,6 +75,21 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
 };
 
 /**
+ * Favorite Handler
+ */
+
+favoriteHandler = (restaurant) => {
+  DBHelper.favoriteHandler(restaurant)
+    .then(rest => {
+      updateRestaurants();
+      console.log(`The restaurant ${rest.name} => ${rest.is_favorite === "true" ? '❤️' : '💔' }`);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+/**
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
@@ -105,6 +121,7 @@ updateRestaurants = () => {
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(
     cuisine,
     neighborhood,
+    self.showFavorite,
     (error, restaurants) => {
       if (error) {
         // Got an error!
@@ -141,7 +158,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
-  if (showMap) {
+  if (self.showMap) {
     addMarkersToMap();
   }
 };
@@ -152,6 +169,24 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = restaurant => {
   const li = document.createElement("li");
   li.className = "card";
+
+  const card_heart = document.createElement('button');
+  card_heart.setAttribute('role', 'button');
+  card_heart.setAttribute('aria-label', `${restaurant.is_favorite === 'true' ? 'Remove' : 'Add'} to favorites`);
+  card_heart.className = `card__heart ${restaurant.is_favorite === 'true' ? 'clicked': ''}`;
+  li.append(card_heart);
+
+  const heart = document.createElement("i");
+  heart.className = `${restaurant.is_favorite === 'true' ? 'fas': 'far'} fa-heart`;
+  card_heart.append(heart);
+
+  // Clicked favourite
+  card_heart.addEventListener('click', () => {
+    favoriteHandler(restaurant);
+    heart.classList.toggle('fas');
+    heart.classList.toggle('far');
+    card_heart.classList.toggle('clicked');
+  });
 
   const picture = document.createElement("picture");
   li.append(picture);
@@ -252,17 +287,29 @@ toggleMap = () => {
   const map = document.getElementById("map");
   const btnMap = document.getElementById('btn-map');
   if (map.style.display === 'none') {
-    showMap = true;
+    self.showMap = true;
     btnMap.innerText = 'Hide Map';
     btnMap.setAttribute('aria-label', 'Hide Map');
     map.style.display = 'block';
     window.initMap();
   } else {
-    showMap = false;
+    self.showMap = false;
     btnMap.innerText = 'Show Map';
     btnMap.setAttribute('aria-label', 'Show Map');
     map.style.display = 'none';
   }
+}
+
+/**
+ * Show / Hide Favorites
+ */
+
+toggleFavorites = () => {
+  const button = document.getElementById('favorites');
+  self.showFavorite = !self.showFavorite;
+  button.classList.toggle('clicked');
+  button.setAttribute('aria-label', `${self.showFavorite ? 'Hide favorites' : 'Show favorites'}`);
+  updateRestaurants();
 }
 
 /**

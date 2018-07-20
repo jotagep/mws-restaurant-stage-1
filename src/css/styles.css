@@ -247,6 +247,26 @@ nav h1 a:focus {
   margin-right: 2rem;
 }
 
+.filter__container #favorites {
+  padding: 1rem 2rem;
+  border: 1px solid #eee;
+  background: none;
+  font-size: 1.6rem;
+  color: #eee;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all .2s ease;
+  outline: none;
+  margin: 1rem 0;
+}
+
+.filter__container #favorites.clicked {
+  background-color: rgba(247, 56, 56, 0.6);
+}
+.filter__container #favorites:hover {
+  transform: translateY(-5px);
+}
+
 .filter-fields {
   display: flex;
   flex-direction: column;
@@ -283,6 +303,7 @@ nav h1 a:focus {
 }
 
 .card {
+  position: relative;
   background-color: #fff;
   box-shadow: 0 1.5rem 4rem rgba(0,0,0,.15);
   border-radius: 5px;
@@ -295,6 +316,32 @@ nav h1 a:focus {
   flex: 1 0 100%;
 }
 
+.card .card__heart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  border-radius: 50%;
+  background-color: rgba(204, 204, 204, .8);
+  width: 65px;
+  height: 65px;
+  box-shadow: 0 1.5rem 4rem rgba(0,0,0,.15);
+  cursor: pointer;
+}
+
+.card .card__heart.clicked {
+  background-color: rgba(247, 56, 56, 0.6);
+}
+
+.card .card__heart i{
+  font-size: 30px;
+}
+
+.card .card__heart .fas{
+  color: #fff;
+}
 
 .card .card__img {
   background-color: #ccc;
@@ -359,6 +406,37 @@ nav h1 a:focus {
 
 
 /* ==== Restaurant Details - Container ==== */
+
+#restaurant-container {
+  position: relative;
+}
+
+#restaurant-container .heart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  border-radius: 50%;
+  background-color: rgba(204, 204, 204, .9);
+  width: 65px;
+  height: 65px;
+  box-shadow: 0 1.5rem 4rem rgba(0,0,0,.15);
+  cursor: pointer;
+}
+
+#restaurant-container .heart.clicked {
+  background-color: rgba(247, 56, 56, 0.6);
+}
+
+#restaurant-container .heart i{
+  font-size: 30px;
+}
+
+#restaurant-container .heart .fas{
+  color: #fff;
+}
 
 #restaurant-name {
   color: #AA5D00;
@@ -525,11 +603,17 @@ nav h1 a:focus {
 
   .filter__container {
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: baseline;
   }
 
-  .filter__container h2 {
+  .filter__container h4 {
     font-size: 2rem;
+  }
+
+  .filter__container #favorites {
+    flex: 0 1 auto;
+    margin-left: 2rem;
   }
 
   .filter-fields {

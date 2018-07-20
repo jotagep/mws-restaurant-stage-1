@@ -50,6 +50,29 @@ fetchRestaurantFromURL = (callback) => {
  * Create restaurant HTML and add it to the webpage
  */
 fillRestaurantHTML = (restaurant = self.restaurant) => {
+
+    const container = document.getElementById('restaurant-container');
+
+    const restaurant_heart = document.createElement('button');
+    restaurant_heart.setAttribute('role', 'button');
+    restaurant_heart.setAttribute('aria-label', `${restaurant.is_favorite === 'true' ? 'Remove' : 'Add'} to favorites`);
+    restaurant_heart.className = `heart ${restaurant.is_favorite === 'true' ? 'clicked': ''}`;
+    container.append(restaurant_heart);
+
+    const heart = document.createElement("i");
+    heart.className = `${restaurant.is_favorite === 'true' ? 'fas': 'far'} fa-heart`;
+    restaurant_heart.append(heart);
+
+    // Clicked favourite
+    restaurant_heart.addEventListener('click', () => {
+        favoriteHandler(restaurant);
+        restaurant.is_favorite = restaurant.is_favorite === 'true' ? 'false' : 'true';
+        heart.classList.toggle('fas');
+        heart.classList.toggle('far');
+        restaurant_heart.classList.toggle('clicked');
+        console.log(restaurant);
+    });
+
     const name = document.getElementById('restaurant-name');
     name.innerHTML = restaurant.name;
 
@@ -151,7 +174,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = (reviews = self.reviews) => {
     const container = document.getElementById('reviews-container');
     const title = document.createElement('h3');
     title.innerHTML = 'Reviews';
@@ -237,3 +260,18 @@ getParameterByName = (name, url) => {
         return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+/**
+ * Favorite Handler
+ */
+
+favoriteHandler = (restaurant) => {
+    DBHelper.favoriteHandler(restaurant)
+        .then(rest => {
+            console.log(`The restaurant ${rest.name} => ${rest.is_favorite === "true" ? '❤️' : '💔' }`);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
