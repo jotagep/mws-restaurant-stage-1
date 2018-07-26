@@ -1,3 +1,5 @@
+importScripts('./js/vendor/idb.js');
+
 const staticCache = "rest-reviews-1.1.3";
 const ImagesCache = "mws-images";
 const allCaches = [
@@ -41,13 +43,13 @@ self.addEventListener('install', function (event) {
 self.addEventListener('fetch', (event) => {
 
   const requestURL = new URL(event.request.url);
-  
+
   if (requestURL.origin === location.origin) {
     if (requestURL.pathname.startsWith('/assets/img')) {
       event.respondWith(serveImg(event.request));
       return;
     }
-    if (requestURL.pathname === '/restaurant.html' ) {
+    if (requestURL.pathname === '/restaurant.html') {
       event.respondWith(
         caches.match('/restaurant.html')
         .then((response) => response || fetch(event.request))
@@ -107,3 +109,126 @@ self.addEventListener("activate", function (event) {
     })
   );
 });
+
+// Check sync events
+
+self.addEventListener('sync', function (event) {
+  if (event.tag === 'favorite') {
+    event.waitUntil(
+      sendFavorites()
+    )
+  } else if (event.tag === 'addReview') {
+    event.waitUntil(
+      sendReviews()
+    )
+  } else if (event.tag === 'deleteReview') {
+    event.waitUntil(
+      deleteReviews()
+    )    
+  }
+});
+
+
+// Send Favorites
+function sendFavorites() {
+
+  return idb.open('favorite_items', 1)
+    .then(async db => {
+      let tx = db.transaction('favorites', 'readonly');
+      let store = tx.objectStore('favorites');
+      const items = await store.getAll();
+
+      items.forEach(restaurant => {
+        favoriteHandler(restaurant)
+          .then(rest => {
+            console.log(`The restaurant ${rest.name} => ${rest.is_favorite === "true" ? '❤️' : '💔' }`);
+            tx = db.transaction('favorites', 'readwrite');
+            store = tx.objectStore('favorites');
+            store.delete(rest.id);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
+    })
+}
+
+// DB Favorite handler
+function favoriteHandler(item) {
+  return fetch(`http://localhost:1337/restaurants/${item.id}/?is_favorite=${item.is_favorite}`, {
+      method: 'PUT'
+    })
+    .then(res => res.json());
+}
+
+// Send Reviews
+
+function sendReviews() {
+  return idb.open('add_reviews', 1)
+    .then(async db => {
+      let tx = db.transaction('reviews', 'readonly');
+      let store = tx.objectStore('reviews');
+      const items = await store.getAll();
+
+      items.forEach(review => {
+        const id = review.id;
+        delete review.id;
+        addReviewHandler(review)
+          .then(rev => {
+            console.log(`Review ${rev.id} by ${rev.name} has been added 👍`);
+            tx = db.transaction('reviews', 'readwrite');
+            store = tx.objectStore('reviews');
+            store.delete(id);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
+    })  
+}
+
+// DB Add handler
+function addReviewHandler(review) {
+  
+  return fetch(`http://localhost:1337/reviews/`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(review)
+    })
+    .then(res => res.json());
+}
+
+// Delete Reviews
+
+function deleteReviews() {
+  return idb.open('delete_reviews', 1)
+    .then(async db => {
+      let tx = db.transaction('reviews', 'readonly');
+      let store = tx.objectStore('reviews');
+      const items = await store.getAll();
+
+      items.forEach(review => {
+        deleteReviewHandler(review.id)
+          .then(rev => {
+            console.log(`Review ${rev.id} by ${rev.name} has been deleted 🗑️`);
+            tx = db.transaction('reviews', 'readwrite');
+            store = tx.objectStore('reviews');
+            store.delete(rev.id);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      });
+    })  
+}
+
+// DB Delete Review handler
+function deleteReviewHandler(id) {
+  return fetch(`http://localhost:1337/reviews/${id}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.json());
+}

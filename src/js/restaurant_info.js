@@ -40,11 +40,19 @@ fetchRestaurantFromURL = (callback) => {
                 console.error(error);
                 return;
             }
-            fillRestaurantHTML();
+            DBHelper.fetchReviewsById(restaurant.id).then(reviews => {
+                reviews.sort((a, b) => {
+                    return a.updatedAt >= b.updatedAt ? -1 : 1;
+                });
+                self.reviews = reviews;
+                console.log('++ Reviews fetched! ++');
+                fillRestaurantHTML();
+            });
             callback(null, restaurant)
         });
     }
 }
+
 
 /**
  * Create restaurant HTML and add it to the webpage
@@ -65,12 +73,11 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
     // Clicked favourite
     restaurant_heart.addEventListener('click', () => {
-        favoriteHandler(restaurant);
         restaurant.is_favorite = restaurant.is_favorite === 'true' ? 'false' : 'true';
+        syncFavorite(restaurant);
         heart.classList.toggle('fas');
         heart.classList.toggle('far');
         restaurant_heart.classList.toggle('clicked');
-        console.log(restaurant);
     });
 
     const name = document.getElementById('restaurant-name');
@@ -175,12 +182,15 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  * Create all reviews HTML and add them to the webpage.
  */
 fillReviewsHTML = (reviews = self.reviews) => {
+    console.log(self.reviews);
     const container = document.getElementById('reviews-container');
-    const title = document.createElement('h3');
-    title.innerHTML = 'Reviews';
-    container.appendChild(title);
 
-    if (!reviews) {
+    const button_add = document.getElementById('button-add');
+    button_add.setAttribute('aria-label', 'Show form to add review');
+    button_add.addEventListener('click', showFormReview);
+
+
+    if (!reviews || reviews.length < 1) {
         const noReviews = document.createElement('p');
         noReviews.innerHTML = 'No reviews yet!';
         container.appendChild(noReviews);
@@ -208,7 +218,8 @@ createReviewHTML = (review) => {
     header.appendChild(name);
 
     const date = document.createElement('span');
-    date.innerHTML = review.date;
+    const date_updated = review.updatedAt ? new Date(review.updatedAt) : new Date(Date.now());
+    date.innerHTML = `${date_updated.getUTCDate()}/${date_updated.getUTCMonth()+1}/${date_updated.getUTCFullYear()}`;
     date.className = 'review__date';
     header.appendChild(date);
 
@@ -229,6 +240,20 @@ createReviewHTML = (review) => {
     comments.innerHTML = review.comments;
     comments.className = 'review__comments';
     body.appendChild(comments);
+
+    if (review.id) {
+        const button_del = document.createElement('button');
+        button_del.className = 'review__button-del';
+        button_del.setAttribute('role', 'button');
+        button_del.setAttribute('aria-label', 'Delete Review');
+        button_del.addEventListener('click', () => {
+            self.reviews.splice(self.reviews.indexOf(review), 1);
+            resetReview();
+            syncDeleteReview(review);
+        })
+        button_del.innerHTML = "Delete";
+        body.appendChild(button_del);      
+    }
 
     li.appendChild(body);
 
@@ -265,7 +290,7 @@ getParameterByName = (name, url) => {
  * Favorite Handler
  */
 
-favoriteHandler = (restaurant) => {
+function favoriteHandler(restaurant) {
     DBHelper.favoriteHandler(restaurant)
         .then(rest => {
             console.log(`The restaurant ${rest.name} => ${rest.is_favorite === "true" ? '❤️' : '💔' }`);
@@ -275,3 +300,105 @@ favoriteHandler = (restaurant) => {
         });
 }
 
+/**
+ * Reset Review
+ */
+
+function resetReview() {
+    const list = document.getElementById('reviews-list');
+    list.innerHTML = '';
+    fillReviewsHTML();
+}
+
+/**
+ * Show Form Review
+ */
+
+function showFormReview() {
+    const form = document.getElementById("form");
+    const btnForm = document.getElementById('button-add');
+    if (form.style.display === 'none') {
+        self.showForm = true;
+        btnForm.innerHTML = '<i class="fas fa-times"></i> Close Form';
+        btnForm.setAttribute('aria-label', 'Close');
+        form.style.display = 'block';
+    } else {
+        self.showForm = false;
+        btnForm.innerHTML = '<i class="fas fa-plus"></i> Add review';
+        btnForm.setAttribute('aria-label', 'Show form to add review');
+        form.style.display = 'none';
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const review = {
+            restaurant_id: self.restaurant.id,
+            name: e.target.name.value,
+            rating: e.target.rating.value,
+            comments: e.target.comment.value
+        }
+
+        if (!review.name || !review.comments) return;
+        form.reset();
+        self.reviews.unshift(review);
+        syncAddReview(review);
+    });
+}
+
+
+/**
+ *  Service Worker Sync Events
+ */
+
+// Favorite event
+function syncFavorite(rest) {
+    navigator.serviceWorker.ready.then(function (swRegistration) {
+        const item = {
+            id: rest.id,
+            is_favorite: rest.is_favorite
+        };
+        DBHelper.openFavoriteDB().then(db => {
+            var tx = db.transaction('favorites', 'readwrite');
+            return tx.objectStore('favorites').put(item);
+        }).then(() => {
+            return swRegistration.sync.register('favorite').then(() => {
+                console.log('* Favorite Sync *');
+            });
+        })
+    });
+}
+
+// Add Review event
+function syncAddReview(review) {
+
+    navigator.serviceWorker.ready.then(function (swRegistration) {
+        DBHelper.openAddReviewsDB().then(db => {
+            var tx = db.transaction('reviews', 'readwrite');
+            return tx.objectStore('reviews').put(review);
+        }).then(() => {
+            return swRegistration.sync.register('addReview').then(() => {
+                console.log('# Add Review Sync #');
+                resetReview();
+                showFormReview();
+            });
+        })
+    });
+}
+
+//Delete Review event
+function syncDeleteReview(review) {
+    navigator.serviceWorker.ready.then(function (swRegistration) {
+        const item = {
+            id: review.id,
+            name: review.name
+        };
+        DBHelper.openDeleteReviewsDB().then(db => {
+            var tx = db.transaction('reviews', 'readwrite');
+            return tx.objectStore('reviews').put(item);
+        }).then(() => {
+            return swRegistration.sync.register('deleteReview').then(() => {
+                console.log('>> Delete Review Sync <<');
+            });
+        })
+    });
+}

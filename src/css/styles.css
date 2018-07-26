@@ -211,7 +211,6 @@ nav h1 a:focus {
   border-radius: 5px;
   cursor: pointer;
   transition: all .2s ease;
-  outline: none;
 }
 
 #btn-map:hover {
@@ -256,7 +255,6 @@ nav h1 a:focus {
   border-radius: 5px;
   cursor: pointer;
   transition: all .2s ease;
-  outline: none;
   margin: 1rem 0;
 }
 
@@ -497,12 +495,98 @@ nav h1 a:focus {
 
 /* ==== Restaurant Details - Reviews ==== */
 
+.reviews__top {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
 #reviews-container h3 {
   color: #AA5D00;
   font-size: 2.5rem;
   font-weight: 300;
   letter-spacing: 0;
   text-transform: uppercase;
+  margin: 0;
+}
+
+.reviews__button-add {
+  margin-left: 3rem;
+  background-color: rgb(51, 51, 51);
+  color: #fff;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding: .6rem 3rem;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all .3s ease;
+  cursor: pointer;
+}
+
+.reviews__button-add:hover {
+  transform: translateY(-5px);
+  background-color: rgb(85, 85, 85);
+}
+
+.reviews__button-add i{
+  margin-right: 1rem;
+}
+
+.reviews__form {
+  margin: 2rem 0;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.reviews__form .form-group {
+  display: flex;
+  align-items: baseline;
+}
+
+.reviews__form .form-group {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.reviews__form .form-group  label {
+  margin-right: 2rem;
+  flex: 0 1 25%;
+}
+
+.reviews__btn-post {
+  background-color: rgb(51, 51, 51);
+  color: #fff;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  font-weight: 400;
+  padding: 1rem 3rem;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all .3s ease;
+  cursor: pointer;
+
+  display: block;
+  width: 100%;
+}
+
+.reviews__form .form-group  input,
+.reviews__form .form-group  textarea,
+.reviews__form .form-group  select{
+  flex: 1;
+  padding: 1rem 2rem;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
+}
+
+.reviews__form .form-group  span{
+  margin-left: 1.5rem;
 }
 
 #reviews-list {
@@ -524,6 +608,8 @@ nav h1 a:focus {
   flex-direction: column;
   border-top-left-radius: 2em;
   border-bottom-right-radius: 2em;
+  flex: 0 1 100%;;
+  transition: all .3s ease;
 }
 
 .review__header {
@@ -552,6 +638,7 @@ nav h1 a:focus {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  height: 100%;
 }
 
 .review__rating {
@@ -570,9 +657,29 @@ nav h1 a:focus {
 }
 
 .review__comments {
-  margin: 0 0 10px;
+  margin: 0 0 2rem;
   color: #666;
   font-weight: 300;
+}
+
+.review__button-del {
+  width: 100%;
+  background-color: rgb(51, 51, 51);
+  color: #fff;
+  border-radius: 0 0 20px 0;
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin: auto 0 0;
+  padding: 1rem 3rem;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all .3s ease;
+  cursor: pointer;
+}
+
+.review__button-del:hover {
+  background-color: rgb(85, 85, 85);
 }
 
 /* ====================== Responsive Design: Media Queries ====================== */
@@ -594,6 +701,11 @@ nav h1 a:focus {
   .filter-fields select:last-of-type {
     margin-right: 0;
   }
+
+  .reviews__form {
+    width: 80%;
+  }
+  
 }
 
 @media screen and (min-width: 640px) {
@@ -623,6 +735,11 @@ nav h1 a:focus {
   .card,
   .review__card {
     flex: 0 1 calc(50% - 1.5rem);
+  }
+
+  
+  .reviews__form {
+    width: 70%;
   }
 
 }
@@ -659,6 +776,19 @@ nav h1 a:focus {
   #restaurant-hours {
     margin: 0;
   }
+
+  #reviews-container {
+    border-top: 2px solid #d9d9d9;
+    width: 100%;
+    max-width: 140rem;
+    padding: 4rem;
+    justify-content: center;
+  }
+
+  .reviews__form {
+    width: 50%;
+    max-width: 700px;
+  }
 }
 
 
@@ -688,14 +818,6 @@ nav h1 a:focus {
   #restaurant-container {
     padding: 3rem 4rem;
   }
-
-  #reviews-container {
-    border-top: 2px solid #d9d9d9;
-    width: 100%;
-    max-width: 140rem;
-    padding: 4rem;
-    justify-content: center;
-  }
 }
 
 @media screen and (min-width: 1800px) {
@@ -715,4 +837,9 @@ nav h1 a:focus {
   #footer {
     font-size: 1.5rem;
   }
+}
+
+@keyframes slideDown {
+  0% { opacity: 0; transform: translateY(-100%); }
+  100% { opacity: 1; transform: translateY(0); }
 }

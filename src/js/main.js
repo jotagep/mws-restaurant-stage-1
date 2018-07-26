@@ -75,21 +75,6 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
 };
 
 /**
- * Favorite Handler
- */
-
-favoriteHandler = (restaurant) => {
-  DBHelper.favoriteHandler(restaurant)
-    .then(rest => {
-      updateRestaurants();
-      console.log(`The restaurant ${rest.name} => ${rest.is_favorite === "true" ? '❤️' : '💔' }`);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
-
-/**
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
@@ -182,7 +167,8 @@ createRestaurantHTML = restaurant => {
 
   // Clicked favourite
   card_heart.addEventListener('click', () => {
-    favoriteHandler(restaurant);
+    restaurant.is_favorite = restaurant.is_favorite === 'true' ? 'false' : 'true';
+    syncFavorite(restaurant);
     heart.classList.toggle('fas');
     heart.classList.toggle('far');
     card_heart.classList.toggle('clicked');
@@ -268,7 +254,7 @@ createRestaurantHTML = restaurant => {
 /**
  * Add markers for current restaurants to the map.
  */
-addMarkersToMap = (restaurants = self.restaurants) => {
+function addMarkersToMap(restaurants = self.restaurants) {
   restaurants.forEach(restaurant => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
@@ -283,7 +269,7 @@ addMarkersToMap = (restaurants = self.restaurants) => {
  * Toogle Map
  */
 
-toggleMap = () => {
+function toggleMap() {
   const map = document.getElementById("map");
   const btnMap = document.getElementById('btn-map');
   if (map.style.display === 'none') {
@@ -304,7 +290,7 @@ toggleMap = () => {
  * Show / Hide Favorites
  */
 
-toggleFavorites = () => {
+function toggleFavorites() {
   const button = document.getElementById('favorites');
   self.showFavorite = !self.showFavorite;
   button.classList.toggle('clicked');
@@ -316,7 +302,7 @@ toggleFavorites = () => {
  * Register Service Worker
  */
 
-registerServiceWorker = () => {
+function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
@@ -332,4 +318,26 @@ registerServiceWorker = () => {
   } else {
     console.log('== Service Worker not supported ==');
   }
+}
+
+/**
+ *  Service Worker Sync Events
+ */
+
+// Favorite event
+function syncFavorite(rest) {
+  navigator.serviceWorker.ready.then(function (swRegistration) {
+    const item = {
+      id: rest.id,
+      is_favorite: rest.is_favorite
+    };
+    DBHelper.openFavoriteDB().then(db => {
+      var tx = db.transaction('favorites', 'readwrite');
+      return tx.objectStore('favorites').put(item);
+    }).then(() => {
+      return swRegistration.sync.register('favorite').then(() => {
+        console.log('* Favorite Sync *');
+      });
+    })
+  });
 }

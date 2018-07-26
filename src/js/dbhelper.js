@@ -179,8 +179,8 @@ class DBHelper {
     static fetchReviewsById (id) {
         return fetch(`${this.DATABASE_REVIEWS}/?restaurant_id=${id}`)
             .then(res => res.json());
-    }
-    
+    } 
+
     /**
      * Restaurant page URL.
      */
@@ -193,17 +193,6 @@ class DBHelper {
      */
     static imageUrlForRestaurant(restaurant) {
         return (`./assets/img/${restaurant.photograph}`);
-    }
-
-    /**
-     * Restaurant Favorite Handler.
-     */
-    static favoriteHandler(restaurant) {
-        const toggleFavorite = restaurant.is_favorite === "true" ? false : true;
-        return fetch(`${DBHelper.DATABASE_URL}/${restaurant.id}/?is_favorite=${toggleFavorite}`, {
-                method: 'PUT'
-            })
-            .then(res => res.json());
     }
 
     /**
@@ -236,9 +225,45 @@ class DBHelper {
         if (!navigator.serviceWorker) {
             return;
         }
-        console.log(' == IDB Created ==');
+        console.log(' == IDB MWS Open ==');
         dbPromise = idb.open('mws', 1, function (upgradeDB) {
-            const store = upgradeDB.createObjectStore('restaurants', {
+            upgradeDB.createObjectStore('restaurants', {
+                keyPath: 'id'
+            });
+        });
+    }
+
+    static openFavoriteDB() {
+        if (!navigator.serviceWorker) {
+            return;
+        }
+        console.log(' == IDB Favorites Open ==');
+        return idb.open('favorite_items', 1, function (upgradeDB) {
+            upgradeDB.createObjectStore('favorites', {
+                keyPath: 'id'
+            });
+        });
+    }
+
+    static openAddReviewsDB() {
+        if (!navigator.serviceWorker) {
+            return;
+        }
+        console.log(' == IDB Add Reviews Open ==');
+        return idb.open('add_reviews', 1, function (upgradeDB) {
+            upgradeDB.createObjectStore('reviews', {
+                keyPath: 'id', autoIncrement: true
+            });
+        });
+    }
+
+    static openDeleteReviewsDB() {
+        if (!navigator.serviceWorker) {
+            return;
+        }
+        console.log(' == IDB Delete Reviews Open ==');
+        return idb.open('delete_reviews', 1, function (upgradeDB) {
+            upgradeDB.createObjectStore('reviews', {
                 keyPath: 'id'
             });
         });
