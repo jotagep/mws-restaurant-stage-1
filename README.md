@@ -1,7 +1,7 @@
 # Mobile Web Specialist Certification Course
 ## Installation
 
--  Clone server repo: [Server Stage 2](https://github.com/udacity/mws-restaurant-stage-2) and follow them to start the server.
+-  Clone server repo: [Server Stage 3](https://github.com/udacity/mws-restaurant-stage-3) and follow them to start the server.
 
 - Clone my repo in your computer and install **node modules** and dependencies
 
@@ -24,27 +24,29 @@ You can see your site live at port __8000__: [http://localhost:8000/](http://loc
 
 ## Stage 2 -- (DONE)
 
+## Stage 3 -- (DONE)
+
 ### Requirements
 
-**Use server data instead of local memory** In the first version of the application, all of the data for the restaurants was stored in the local application. You will need to change this behavior so that you are pulling all of your data from the server instead, and using the response data to generate the restaurant information on the main page and the detail page.
+**Add a form to allow users to create their own reviews:** In previous versions of the application, users could only read reviews from the database. You will need to add a form that adds new reviews to the database. The form should include the user’s name, the restaurant id, the user’s rating, and whatever comments they have. Submitting the form should update the server when the user is online.
 
-**Use IndexedDB to cache JSON responses** In order to maintain offline use with the development server you will need to update the service worker to store the JSON received by your requests using the IndexedDB API. As with **Stage One**, any page that has been visited by the user should be available offline, with data pulled from the shell database.
+**Add functionality to defer updates until the user is connected:** If the user is not online, the app should notify the user that they are not connected, and save the users' data to submit automatically when re-connected. In this case, the review should be deferred and sent to the server when connection is re-established (but the review should still be visible locally even before it gets to the server.)
 
-**Meet the minimum performance requirements** Once you have your app working with the server and working in offline mode, you’ll need to measure your site performance using Lighthouse.
+**Meet the new performance requirements:** In addition to adding new features, the performance targets you met in **Stage Two** have tightened. Using Lighthouse, you’ll need to measure your site performance against the new targets.
 
 Lighthouse measures performance in four areas, but your review will focus on three:
 
 - **Progressive Web App** score should be at **90** or better.
-- **Performance** score should be at **70** or better.
+- **Performance** score should be at **90** or better.
 - **Accessibility** score should be at **90** or better.
 
-You can audit your site's performance with Lighthouse by using the Audit tab of Chrome Dev Tools.
+You can audit this site performance with Lighthouse by using the Audit tab of Chrome Dev Tools to check results 🙂.
 
-### My results
+### My results (FINAL STAGE 3)
 
 Provided by Lighthouse
 
-![alt text](http://i63.tinypic.com/dxb7sy.png "Test results stage 2")
+![alt text](http://i67.tinypic.com/dvmupt.png "Test results stage 3")
 
 ---
 
